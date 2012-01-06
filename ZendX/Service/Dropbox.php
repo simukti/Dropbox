@@ -73,11 +73,6 @@ class ZendX_Service_Dropbox extends Zend_Rest_Client
     protected $_options = array();
     
     /**
-     * @var Zend_Cache_Core
-     */
-    protected $_cache;
-    
-    /**
      * @param array|Zend_Config $options {@see Zend_Oauth_Config::setOptions()}
      * @param Zend_Oauth_Consumer $consumer 
      */
@@ -264,6 +259,11 @@ class ZendX_Service_Dropbox extends Zend_Rest_Client
         
         $uri = self::BASE_URI_API . self::FILES_METADATA_PATH . '/' . $this->getDropboxRoot() . $this->_preparePath($path);
         
+        /**
+         * Params settings from {@link https://github.com/BenTheDesigner/Dropbox/blob/master/Dropbox/API.php#L137-143}
+         * @author Ben Tadiar <ben@handcraftedbyben.co.uk>
+         * @link https://github.com/benthedesigner/dropbox
+         */
         $params = array(
             'file_limit'        => ($limit < 1) ? 1 : (($limit > 10000) ? 10000 : (int) $limit),
             'hash'              => (is_string($hash)) ? $hash : 0,
