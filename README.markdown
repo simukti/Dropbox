@@ -7,7 +7,7 @@ This is a Dropbox ReST API client for Zend Framework v1.10+ (current proposal fo
 ##USAGE##
 Dropbox ReST API is using OAuth v1, so I use Zend_Oauth_* for all API request (inspired by Zend_Service_Twitter)
 
-####Initial####
+###Initial###
 ```php
 <?php
 $options = array(
@@ -40,8 +40,53 @@ $accessToken = $dropbox->getAccessToken($query, $requestToken);
 // to Zend_Oauth_Consumer constructor options
 ```
 
-For more example, please see *DropboxController.php*
+###API Call###
+```php
+<?php
+// https://www.dropbox.com/developers/reference/api#account-info
+$dropbox->accountInfo(); // return json
 
+// https://www.dropbox.com/developers/reference/api#files-GET
+$dropbox->fileGet($path, $rev);
+
+// https://www.dropbox.com/developers/reference/api#files_put
+$dropbox->filePut($file, $path, $overwrite);
+
+// https://www.dropbox.com/developers/reference/api#metadata
+$dropbox->fileMetadata($path, $limit, $hash, $list, $include_deleted, $rev);
+
+// https://www.dropbox.com/developers/reference/api#revisions
+$dropbox->fileRevision($path, $rev_limit);
+
+// https://www.dropbox.com/developers/reference/api#restore
+$dropbox->fileRestore($path, $rev);
+
+// https://www.dropbox.com/developers/reference/api#search
+$dropbox->fileSearch($path, $query, $file_limit, $include_deleted);
+
+// https://www.dropbox.com/developers/reference/api#shares
+$dropbox->fileShares($path);
+
+// https://www.dropbox.com/developers/reference/api#media
+$dropbox->fileMedia($path);
+
+// https://www.dropbox.com/developers/reference/api#thumbnails
+$dropbox->fileThumbnails($path, $format, $size);
+
+// https://www.dropbox.com/developers/reference/api#fileops-copy
+$dropbox->fileOpsCopy($from_path, $to_path);
+
+// https://www.dropbox.com/developers/reference/api#fileops-create-folder
+$dropbox->fileOpsCreateFolder($path);
+
+// https://www.dropbox.com/developers/reference/api#fileops-delete
+$dropbox->fileOpsDelete($path);
+
+// https://www.dropbox.com/developers/reference/api#fileops-move
+$dropbox->fileOpsMove($from_path, $to_path);
+```
+
+All api call will return json string, except fileGet() and fileThumbnails() will return original http response from dropbox.
 
 ##LICENSE##
 All files are licensed under the MIT License.
